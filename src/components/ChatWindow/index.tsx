@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Message } from '../../types/chat';
+import { Message as MessageType } from '../../types/chat';
 import { MessageContent } from '../MessageContent';
 import  NavigationBar from '../NavigationBar';
 import { useChat } from '../../hooks/useChat';
@@ -11,7 +11,9 @@ import {
   Input,
   SendButton,
   TypingIndicator,
-  TypingDot
+  TypingDot,
+  Message,
+ 
 } from './styles';
 
 interface ChatWindowProps {
@@ -21,12 +23,12 @@ interface ChatWindowProps {
 const ChatWindow: React.FC<ChatWindowProps> = ({ onBack }) => {
   const [newMessage, setNewMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { messages, isTyping, generateBotResponse } = useChat();
+  const { messages, isTyping, generateBotResponse, setMessages } = useChat();
   const { activeBrand } = useBrandData();
 
   const handleSendMessage = async () => {
     if (newMessage.trim()) {
-      const userMessage: Message = {
+      const userMessage: MessageType = {
         id: Date.now().toString(),
         text: newMessage,
         sender: 'user',
@@ -56,8 +58,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ onBack }) => {
         brandLogo={activeBrand?.iconUrl || ''}
       />
       <MessagesContainer>
-        {messages.map((message) => (
-          <Message 
+        {messages.map((message: MessageType) => (
+          <Message
             key={message.id}
             isSender={message.sender === 'user'}
           >

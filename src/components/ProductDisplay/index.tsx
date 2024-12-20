@@ -1,4 +1,5 @@
-import { AdvertisersDataSet } from '../hooks/useAdvertisersDataSet';
+import { AdvertisersDataSet } from '../../hooks/useAdvertisersDataSet';
+import { styles } from './styles';
 
 interface ProductDisplayProps {
     imageUrl: string;
@@ -12,20 +13,13 @@ interface ProductDisplayProps {
 
 const ProductDisplay: React.FC<ProductDisplayProps> = ({ imageUrl, originalPrice, discountAmount, dataSets, activeDataSetId, onDataSetChange, onChatClick }) => {
     const discountedPrice = originalPrice * (1 - discountAmount / 100);
-console.log(dataSets.find(ds => ds.id === activeDataSetId));
     return (
         <div>
-            <div style={{
-                padding: '20px',
-                marginRight: '20px',
-                border: '1px solid #ddd',
-                borderRadius: '8px',
-                width: '300px'
-            }}>
+            <div style={styles.container}>
                 <select
                     value={activeDataSetId}
                     onChange={(e) => onDataSetChange(e.target.value)}
-                    style={{ marginBottom: '10px' }}
+                    style={styles.select}
                 >
                     {dataSets.map((dataSet) => (
                         <option key={dataSet.id} value={dataSet.id}>
@@ -34,34 +28,16 @@ console.log(dataSets.find(ds => ds.id === activeDataSetId));
                     ))}
                 </select>
 
-                <div style={{ position: 'relative' }}>
+                <div style={styles.imageContainer}>
                     <img
                         src={imageUrl}
                         alt="Product"
-                        style={{
-                            width: '100%',
-                            height: 'auto',
-                            marginBottom: '15px'
-                        }}
+                        style={styles.image}
                     />
                     {dataSets.find(ds => ds.id === activeDataSetId)?.adContent.callToAction && (
                         <button
                             onClick={onChatClick}
-                            style={{
-                                // position: 'absolute',
-                                bottom: '20px',
-                                left: '50%',
-                                // transform: 'translateX(-50%)',
-                                backgroundColor: '#0095f6',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '4px',
-                                padding: '8px 16px',
-                                fontWeight: 'bold',
-                                cursor: 'pointer',
-                                zIndex: 10,
-                                width: '100%',
-                            }}
+                            style={styles.button}
                         >
                             {dataSets.find(ds => ds.id === activeDataSetId)?.adContent.callToAction}
                         </button>
