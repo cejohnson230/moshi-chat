@@ -7,8 +7,8 @@ export type AdvertisersDataSet = {
   adContent: {
     imageUrl: string;
     caption: string;
-    dealText?: string;
-    callToAction?: string;
+    callToAction: string;
+    checkoutUrl: string;
   };
   productDetails: {
     name: string;
@@ -34,6 +34,7 @@ const ads = [
       caption:
         "Fuel your day naturally 🌱. Meet GEM Bites – a bite-sized powerhouse of vitamins and superfoods.",
       callToAction: "Reply and save 15% on your first order!",
+      checkoutUrl: "https://dailygem.com/products/the-gem-bite-citrus-ginger-1?discount=search30&variant=43171118547126",
     },
     productDetails: {
       name: "GEM Bites",
@@ -62,6 +63,7 @@ const ads = [
       caption:
         "Elevate your performance 🏋️. CREATE Creatine is pure, effective, and made for serious athletes.",
       callToAction: "Reply to buy with 15% off",
+      checkoutUrl: "https://trycreate.co/products/creatine-monohydrate-gummies-1?variant=51615847252340&selling_plan=691702104436",
     },
     productDetails: {
       name: "CREATE Creatine Monohydrate",
@@ -87,6 +89,7 @@ const ads = [
         "Elegance redefined ✨. Discover the timeless Safiyaa dress collection for your special moments.",
       callToAction: "Explore Now",
       dealText: "reply for 15% off on your first order",
+      checkoutUrl: "https://www.safiyaa.com/products/santina-long-dresses-in-black?_pos=21&_sid=1ab8af539&_ss=r",
     },
     productDetails: {
       name: "Safiyaa Signature Dress",

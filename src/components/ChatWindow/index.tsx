@@ -126,9 +126,80 @@ const TypingDot = styled.div`
   }
 `;
 
+const LinkPreviewWrapper = styled.div`
+  margin: 8px 0;
+  max-width: 300px;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+  cursor: pointer;
+`;
+
+const PreviewImage = styled.img`
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+`;
+
+const PreviewContent = styled.div`
+  padding: 12px;
+`;
+
+const PreviewTitle = styled.div`
+  font-weight: bold;
+  margin-bottom: 4px;
+`;
+
+const PreviewDescription = styled.div`
+  font-size: 0.9em;
+  color: #666;
+`;
+
 interface ChatWindowProps {
   onBack: () => void;
 }
+
+const extractUrls = (text: string): string[] => {
+  const urlRegex = /<(https?:\/\/[^\s>]+)>/g;
+  const matches = [...text.matchAll(urlRegex)];
+  return matches.map(match => match[1]);
+};
+
+const MessageContent: React.FC<{ text: string }> = ({ text }) => {
+  const { activeDataSet } = useAdvertisersDataSet();
+  const urls = extractUrls(text);
+  
+  if (urls.length === 0) {
+    return <>{text}</>;
+  }
+
+  const handlePreviewClick = (url: string) => {
+    window.open(url, '_blank');
+  };
+
+  return (
+    <>
+      {text.split(/<https?:\/\/[^\s>]+>/g).map((part, index) => (
+        <React.Fragment key={index}>
+          {part}
+          {urls[index] && (
+            <LinkPreviewWrapper onClick={() => handlePreviewClick(urls[index])}>
+              <PreviewImage 
+                src={activeDataSet.adContent.imageUrl} 
+                alt={activeDataSet.adContent.caption}
+              />
+              <PreviewContent>
+                <PreviewTitle>{activeDataSet.brandId}</PreviewTitle>
+                <PreviewDescription>{activeDataSet.adContent.caption}</PreviewDescription>
+              </PreviewContent>
+            </LinkPreviewWrapper>
+          )}
+        </React.Fragment>
+      ))}
+    </>
+  );
+};
 
 const ChatWindow: React.FC<ChatWindowProps> = ({ onBack }) => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -141,14 +212,16 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ onBack }) => {
     {
       role: 'system',
       content: `You are a helpful shopping assistant representing ${activeDataSet.brandId}. 
+      Be brief and concise, answering in 2 to 3 sentences. 
                 The product being discussed is ${activeDataSet.adContent.caption} 
                 with a deal amount of ${activeDataSet.productDetails.discountAmount}% off 
                 of the original price of ${activeDataSet.productDetails.originalPrice}.
                 The product is available in the following variants: ${activeDataSet.productDetails.variants.join(', ')}.
-                Be sure to mention the variants when asked. Be brief and concise. Once the user selects a variant, 
-                ask them if they would like to purchase the product in that variant. If they do, ask them for their address 
-                and then confirm the purchase. If they do not want to purchase the product in that variant, ask them if they 
-                would like to purchase the product in a different variant.`
+                You should give the user the price of the product, the variants options, and ask if they would like to purchase the product.
+                If the users agrees to purchase the product, give them the checkout link and ask them to click the link below to purchase the product.
+                The checkout link is ${activeDataSet.adContent.checkoutUrl}
+                `
+                
     }
   ]);
 
@@ -280,7 +353,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ onBack }) => {
             key={message.id}
             isSender={message.sender === 'user'}
           >
-            {message.text}
+            <MessageContent text={message.text} />
           </Message>
         ))}
         {isTyping && (
@@ -290,6 +363,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ onBack }) => {
             <TypingDot />
           </TypingIndicator>
         )}
+
       </MessagesContainer>
       <MessageInput>
         <Input
