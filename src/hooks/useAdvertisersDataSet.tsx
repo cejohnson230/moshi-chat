@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { useBrandData } from "./useBrandData";
 
 export type AdvertisersDataSet = {
   id: string;
@@ -25,14 +26,14 @@ export type AdvertisersDataSet = {
 };
 
 const ads = [
-  {
+    {
     id: "ad_001",
     brandId: "dailygem",
     adContent: {
       imageUrl: "/assets/gembite.jpg",
       caption:
         "Fuel your day naturally 🌱. Meet GEM Bites – a bite-sized powerhouse of vitamins and superfoods.",
-      dealText: "Reply and save 15% on your first order!",
+      callToAction: "Reply and save 15% on your first order!",
     },
     productDetails: {
       name: "GEM Bites",
@@ -118,32 +119,25 @@ interface AdvertisersDataSetContextType {
 const AdvertisersDataSetContext = createContext<AdvertisersDataSetContextType | undefined>(undefined);
 
 export function AdvertisersDataSetProvider({ children }: { children: ReactNode }) {
+  const { setActiveBrandById } = useBrandData();
   const [dataSets] = useState<AdvertisersDataSet[]>(ads);
-  const [activeDataSet, setActiveDataSet] = useState<AdvertisersDataSet>(
-    ads[0] || {
-      id: "",
-      brandId: "",
-      adContent: { imageUrl: "", caption: "" },
-      productDetails: {
-        name: "",
-        originalPrice: 0,
-        description: "",
-        variants: []
-      },
-      metadata: {
-        adPlacement: "",
-        targetAudience: [],
-        adObjective: "",
-        campaignType: ""
-      }
-    }
-  );
+  const [activeDataSet, setActiveDataSet] = useState<AdvertisersDataSet>(ads[0]);
 
+  useEffect(() => {
+    if (activeDataSet) {
+      setActiveBrandById(activeDataSet.brandId);
+    }
+  }, []);
+
+  const handleSetActiveDataSet = (dataSet: AdvertisersDataSet) => {
+    setActiveDataSet(dataSet);
+    setActiveBrandById(dataSet.brandId);
+  };
 
   const setActiveDataSetById = (dataSetId: string) => {
     const newDataSet = dataSets.find((ds) => ds.id === dataSetId);
     if (newDataSet) {
-      setActiveDataSet(newDataSet);
+      handleSetActiveDataSet(newDataSet);
     }
   };
 
@@ -152,14 +146,13 @@ export function AdvertisersDataSetProvider({ children }: { children: ReactNode }
       value={{
         dataSets,
         activeDataSet,
-        setActiveDataSet,
+        setActiveDataSet: handleSetActiveDataSet,
         setActiveDataSetById,
       }}
     >
       {children}
     </AdvertisersDataSetContext.Provider>
   );
-  
 }
 
 export function useAdvertisersDataSet() {

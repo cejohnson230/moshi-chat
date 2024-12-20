@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { useAdvertisersDataSet } from '../../hooks/useAdvertisersDataSet';
+import NavigationBar from '../NavigationBar';
+import { useBrandData } from '../../hooks/useBrandData';
 
 interface Message {
   id: string;
@@ -124,12 +126,17 @@ const TypingDot = styled.div`
   }
 `;
 
-const ChatWindow: React.FC = () => {
+interface ChatWindowProps {
+  onBack: () => void;
+}
+
+const ChatWindow: React.FC<ChatWindowProps> = ({ onBack }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const { activeDataSet } = useAdvertisersDataSet();
+  const { activeBrand } = useBrandData();
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([
     {
       role: 'system',
@@ -262,6 +269,11 @@ const ChatWindow: React.FC = () => {
 
   return (
     <ChatContainer>
+      <NavigationBar 
+        onBack={onBack}
+        brandName={activeBrand?.name || ''}
+        brandLogo={activeBrand?.iconUrl || ''}
+      />
       <MessagesContainer>
         {messages.map((message) => (
           <Message 
