@@ -12,8 +12,7 @@ export type AdvertisersDataSet = {
   productDetails: {
     name: string;
     originalPrice: number;
-    dealPrice?: number;
-    discountAmount?: number;
+    discountAmount: number;
     description: string;
     variants: string[];
   };
@@ -38,7 +37,7 @@ const ads = [
     productDetails: {
       name: "GEM Bites",
       originalPrice: 39.99,
-      dealPrice: 20, //in percentage
+      discountAmount: 20, //in percentage
       description:
         "GEM Bites are nutrient-dense, plant-based bites that provide essential vitamins and minerals in one delicious chew.",
       variants: ["Cacao", "Lemon", "Cinnamon"],
