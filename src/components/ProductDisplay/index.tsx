@@ -1,7 +1,7 @@
 import { AdvertisersDataSet } from '../../hooks/useAdvertisersDataSet';
 import { useBrandData } from '../../hooks/useBrandData';
 import { styles } from './styles';
-import { FaExternalLinkAlt, FaLink, FaEllipsisH } from 'react-icons/fa';
+import { FaLink, FaEllipsisH } from 'react-icons/fa';
 
 interface ProductDisplayProps {
     imageUrl: string;
