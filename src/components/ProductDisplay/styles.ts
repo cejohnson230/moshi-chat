@@ -9,23 +9,62 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column' as const,
   },
+  selectContainer: {
+    position: 'relative',
+    width: '100%',
+    maxWidth: '300px',
+    marginBottom: '20px',
+  },
   select: {
-    marginBottom: '10px'
+    width: '100%',
+    padding: '12px 16px',
+    fontSize: '16px',
+    border: '2px solid #e0e0e0',
+    borderRadius: '8px',
+    backgroundColor: '#fff',
+    appearance: 'none',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+    ':hover': {
+      borderColor: '#999',
+    },
+    ':focus': {
+      outline: 'none',
+      borderColor: '#0066ff',
+      boxShadow: '0 0 0 3px rgba(0,102,255,0.1)',
+    },
+  },
+  selectArrow: {
+    position: 'absolute',
+    right: '16px',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    pointerEvents: 'none',
+    color: '#666',
+    fontSize: '12px',
   },
   imageContainer: {
     position: 'relative' as const,
     flex: '1',
-    overflow: 'hidden',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+   // overflow: 'hidden',
   },
   image: {
-    width: '100%',
-    height: '100%',
+    display: 'flex',
+    width: '90%',
+    height: '90%',
     objectFit: 'contain' as const,
+    justifyContent: 'center',
     marginBottom: '0',
+    maxWidth: '300px',
+    maxHeight: '300px',
   },
   button: {
     bottom: '20px',
-    left: '50%',
+    left: '10%',
     backgroundColor: '#0095f6',
     color: 'white',
     border: 'none',
@@ -33,23 +72,9 @@ export const styles = {
     padding: '8px 16px',
     fontWeight: 'bold',
     cursor: 'pointer',
-    zIndex: 10,
+    // zIndex: 10,
     width: '100%',
-    position: 'absolute' as const,
-    transform: 'translateX(-50%)',
+    //position: 'absolute' as const,
+    //  transform: 'translateX(-50%)',
   },
-  // Keeping commented styles for reference
-  // originalPrice: {
-  //   textDecoration: 'line-through',
-  //   color: '#666'
-  // },
-  // discountedPrice: {
-  //   fontSize: '1.2em',
-  //   fontWeight: 'bold',
-  //   color: '#e41e31'
-  // },
-  // discountLabel: {
-  //   marginLeft: '8px',
-  //   fontSize: '0.8em'
-  // }
 };

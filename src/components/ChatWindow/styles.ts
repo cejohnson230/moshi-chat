@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ChatContainer = styled.div`
   width: 100%;
-  max-width: 400px;
+  width: 400px;
   height: 600px;
   border: 1px solid #dbdbdb;
   border-radius: 4px;

@@ -27,6 +27,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ onBack }) => {
   const { activeBrand } = useBrandData();
 
   const handleSendMessage = async () => {
+    setIsLoading(true);
     if (newMessage.trim()) {
       const userMessage: MessageType = {
         id: Date.now().toString(),
@@ -37,10 +38,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ onBack }) => {
       
       setMessages(prev => [...prev, userMessage]);
       setNewMessage('');
-      setIsLoading(true);
-
-      await generateBotResponse(newMessage);
       setIsLoading(false);
+      await generateBotResponse(newMessage);
     }
   };
 
@@ -51,6 +50,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ onBack }) => {
   };
 
   return (
+    <div data-testid="chat-window">
     <ChatContainer>
       <NavigationBar 
         onBack={onBack}
@@ -67,7 +67,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ onBack }) => {
           </Message>
         ))}
         {isTyping && (
-          <TypingIndicator>
+          <TypingIndicator role="status">
             <TypingDot />
             <TypingDot />
             <TypingDot />
@@ -92,6 +92,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ onBack }) => {
         </SendButton>
       </MessageInput>
     </ChatContainer>
+    </div>
   );
 };
 
