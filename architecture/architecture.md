@@ -1,6 +1,28 @@
 
 # Mochi Chat Architecture
 
+```mermaid
+graph TD
+    A[User Opens App] --> B[Ad Selection]
+    B -->|Selects Ad| C[Ad Data Passed to Chat Bot]
+    C --> D[User Redirected to Chat Window]
+    D -->|User Sends Message| E[LLM Processes Message]
+    E --> F[Bot Responds with Product Info]
+    F -->|User Agrees to Purchase| G[Checkout Link Provided]
+    G --> H[User Completes Purchase]
+
+    subgraph Context Providers
+        I[AdvertiserDataSetProvider]
+        J[BrandDataSetProvider]
+    end
+
+    B --> I
+    B --> J
+    I --> C
+    J --> C
+```
+
+
 ## Ad Selection
 The app loads with a list of ads, and the user can select an ad to purchase. The ad includes a caption, a checkout url, and a product image. 
 We are storing the advertiser and associated brand data in state, to pass to the chat bot. 
@@ -20,7 +42,7 @@ You are a helpful shopping assistant representing <the brand>.
 The product being discussed is <caption> with a deal amount of <discountAmount>% off of the original price of <originalPrice>.
                The product is available in the following variants: <variants>.
                You should give the user the price of the product, the variants options, and ask if they would like to purchase the product.
-               If the users agrees to purchase the product, give them the checkout link and ask them to click the link below to purchase the product.
+               Only once the users agrees to purchase the product, give them the checkout link and ask them to click the link below to purchase the product.
                The checkout link is <checkoutUrl>
 ```
 
