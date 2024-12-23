@@ -1,6 +1,5 @@
 import React from 'react';
 import { useAdvertisersDataSet } from '../../hooks/useAdvertisersDataSet';
-import { extractUrls } from '../../utils/urlExtractor';
 import {
   LinkPreviewWrapper,
   PreviewImage,
@@ -15,35 +14,46 @@ interface MessageContentProps {
 
 export const MessageContent: React.FC<MessageContentProps> = ({ text }) => {
     const { activeDataSet } = useAdvertisersDataSet();
-    const urls = extractUrls(text);
+    const linkRegex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
+    const parts = text.split(linkRegex);
     
-    if (urls.length === 0) {
+    if (!text.match(linkRegex)) {
       return <>{text}</>;
     }
   
     const handlePreviewClick = (url: string) => {
-      window.open(url, '_blank');
+      const cleanUrl = url.endsWith('.') ? url.slice(0, -1) : url;
+      window.open(cleanUrl, '_blank');
+    };
+
+    const cleanText = (text: string) => {
+      return text.replace(/^\.\s+/, ''); // Remove leading period and whitespace
     };
   
     return (
       <>
-        {text.split(/<https?:\/\/[^\s>]+>/g).map((part, index) => (
-          <React.Fragment key={index}>
-            {part}
-            {urls[index] && (
-              <LinkPreviewWrapper onClick={() => handlePreviewClick(urls[index])}>
+        {parts.map((part, index) => {
+          if (index % 3 === 0) {
+            return cleanText(part);
+          }
+          if (index % 3 === 1) {
+            const url = parts[index + 1];
+            const cleanUrl = url.endsWith('.') ? url.slice(0, -1) : url;
+            return (
+              <LinkPreviewWrapper key={index} onClick={() => handlePreviewClick(cleanUrl)}>
                 <PreviewImage 
                   src={activeDataSet.adContent.imageUrl} 
                   alt={activeDataSet.adContent.caption}
                 />
                 <PreviewContent>
                   <PreviewTitle>{activeDataSet.brandId}</PreviewTitle>
-                  <PreviewDescription>{activeDataSet.adContent.caption}</PreviewDescription>
+                  <PreviewDescription>{part}</PreviewDescription>
                 </PreviewContent>
               </LinkPreviewWrapper>
-            )}
-          </React.Fragment>
-        ))}
+            );
+          }
+          return null;
+        })}
       </>
     );
   };
