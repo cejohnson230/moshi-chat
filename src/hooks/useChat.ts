@@ -17,7 +17,7 @@ export const useChat = () => {
                 of the original price of ${activeDataSet.productDetails.originalPrice}.
                 The product is available in the following variants: ${activeDataSet.productDetails.variants.join(', ')}.
                 You should give the user the price of the product, the variants options, and ask if they would like to purchase the product.
-                If the users agrees to purchase the product, give them the checkout link and ask them to click the link below to purchase the product.
+                Only once the users agrees to purchase the product, give them the checkout link and ask them to click the link below to purchase the product.
                 The checkout link is ${activeDataSet.adContent.checkoutUrl}
                 `
     }
