@@ -34,10 +34,10 @@ export const useChat = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
+            "Authorization": `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
           },
           body: JSON.stringify({
-            model: "gpt-4o-mini",
+            model: `${import.meta.env.VITE_OPENAI_MODEL || 'gpt-4o-mini'}`,
             messages: updatedHistory,
             stream: true,
             temperature: 0.7,

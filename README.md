@@ -49,25 +49,24 @@ yarn build
 
 The built files will be in the `dist` directory.
 
-## Running Ollama Locally
+## Setting Up OpenAI Integration
 
-1. Install Ollama from [ollama.ai](https://ollama.ai)
-
-2. Pull the required model:
+1. Create a `.env.local` file in the root directory:
 ```bash
-ollama pull llama2
+VITE_OPENAI_API_KEY=your_api_key_here
+VITE_OPENAI_MODEL=gpt-3.5-turbo # or gpt-4
 ```
 
-3. Start the Ollama server:
-```bash
-ollama serve
-```
-
-4. The API will be available at `http://localhost:11434`
+2. Get your OpenAI API key:
+   - Sign up/login at [OpenAI Platform](https://platform.openai.com)
+   - Navigate to API keys section
+   - Create a new API key
+   - Copy and paste it into your `.env.local` file
 
 ### Supported Models
 
-- Llama2
+- GPT-3.5 Turbo
+- GPT-4 (if you have access)
 
 ## Project Architecture
 
