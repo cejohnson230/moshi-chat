@@ -1,4 +1,4 @@
-# AI Chat Application
+# Mochi Chat Application
 
 A modern chat application built with React, TypeScript, and Vite that allows users to interact with LLM chat bot for purchasing 
 products in an Instagram-inspired environment.
