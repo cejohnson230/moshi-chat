@@ -42,6 +42,32 @@ yarn build
 
 The built files will be in the `dist` directory.
 
+## Running Ollama Locally
+
+1. Install Ollama from [ollama.ai](https://ollama.ai)
+
+2. Pull the required model:
+```bash
+ollama pull llama2
+```
+
+3. Start the Ollama server:
+```bash
+ollama serve
+```
+
+4. The API will be available at `http://localhost:11434`
+
+### Supported Models
+
+- Llama2
+
+## Project Architecture
+
+Detailed documentation about the application's architecture can be found in the `/docs/architecture` directory.
+
+For more information, see [Architecture Documentation](/docs/architecture/README.md).
+
 ## Common Issues and Solutions
 
 ### Build Errors
