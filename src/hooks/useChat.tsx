@@ -31,17 +31,20 @@ export const useChat = () => {
       setChatHistory(updatedHistory);
   
       try {
-        const response = await fetch('http://localhost:11434/api/chat', {
-          method: 'POST',
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
+            "Authorization": `Bearer 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`,
           },
           body: JSON.stringify({
-            model: 'llama2',
+            model: "gpt-4o-mini",
             stream: true,
-            messages: updatedHistory
-          })
+            messages: updatedHistory,
+          }),
         });
+
+        console.log(response);
   
         const reader = response.body?.getReader();
         if (!reader) throw new Error('No reader available');
