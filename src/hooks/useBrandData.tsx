@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from "react";
+import React from 'react';
 
 export type BrandData = {
   id: string;
@@ -44,13 +45,12 @@ export function BrandDataProvider({ children }: { children: ReactNode }) {
     const newBrand = brands.find((brand) => brand.id === brandId);
     setActiveBrand(newBrand || null);
   };
-
   return (
     <BrandDataContext.Provider
       value={{
         brands,
         activeBrand,
-        setActiveBrandById,
+        setActiveBrandById
       }}
     >
       {children}
