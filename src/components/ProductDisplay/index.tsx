@@ -2,7 +2,7 @@ import { AdvertisersDataSet } from '../../hooks/useAdvertisersDataSet';
 import { useBrandData } from '../../hooks/useBrandData';
 import { styles } from './styles';
 import { FaLink, FaEllipsisH } from 'react-icons/fa';
-
+import React from 'react';
 interface ProductDisplayProps {
     imageUrl: string;
     originalPrice: number;

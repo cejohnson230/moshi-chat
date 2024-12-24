@@ -14,9 +14,9 @@ const App: React.FC = () => {
       alignItems: 'center', 
       justifyContent: 'center',
       minHeight: '100vh',
-      padding: '20px',
       width: '100%',
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
+      padding: '2vh'
     }}>
       <div style={{ 
         display: 'flex', 

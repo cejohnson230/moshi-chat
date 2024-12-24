@@ -1,10 +1,8 @@
 export const styles = {
   container: {
-    padding: '10px',
     marginRight: '0',
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    width: '100%',
+    // border: '1px solid #ddd',
+    // borderRadius: '8px',
     maxWidth: '600px',
     height: 'auto',
     minHeight: '600px',
@@ -16,6 +14,7 @@ export const styles = {
     width: '100%',
     maxWidth: '300px',
     marginBottom: '20px',
+    alignSelf: 'center',
   },
   select: {
     width: '100%',
