@@ -1,7 +1,7 @@
 export const styles = {
   container: {
     width: '100%',
-    maxWidth: '600px',
+    maxWidth: '400px',
     margin: '0 auto',
     minHeight: '600px',
     display: 'flex',
@@ -73,7 +73,7 @@ export const styles = {
     borderRadius: '4px',
     padding: '8px 16px',
     fontWeight: 'bold',
-    fontSize: '.6em',
+    fontSize: '1em',
     cursor: 'pointer',
     // zIndex: 10,
     width: '100%',
