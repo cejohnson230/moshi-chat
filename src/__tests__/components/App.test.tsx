@@ -2,6 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import App from '../../App';
 import { useAdvertisersDataSet } from '../../hooks/useAdvertisersDataSet';
 import '@testing-library/jest-dom';
+import React from 'react';
 
 // Mock the custom hook
 jest.mock('../../hooks/useAdvertisersDataSet');

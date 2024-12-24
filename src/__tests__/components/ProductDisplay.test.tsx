@@ -2,6 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import ProductDisplay from '../../components/ProductDisplay';
 import '@testing-library/jest-dom';
 import { AdvertisersDataSet } from '../../hooks/useAdvertisersDataSet';
+import React from 'react';
 
 
 describe('ProductDisplay Component', () => {

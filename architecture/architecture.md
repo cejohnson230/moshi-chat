@@ -1,5 +1,5 @@
 
-# Mochi Chat Architecture
+# Moshi Chat Architecture
 
 ```mermaid
 graph TD

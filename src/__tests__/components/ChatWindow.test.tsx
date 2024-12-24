@@ -3,6 +3,7 @@ import ChatWindow from '../../components/ChatWindow/index';
 import { useChat } from '../../hooks/useChat';
 import { useBrandData } from '../../hooks/useBrandData';
 import '@testing-library/jest-dom';
+import React from 'react';
 
 
 // Mock the hooks

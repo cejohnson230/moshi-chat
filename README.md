@@ -1,4 +1,4 @@
-# Mochi Chat Application
+# Moshi Chat Application
 
 A modern chat application built with React, TypeScript, and Vite that allows users to interact with LLM chat bot for purchasing 
 products in an Instagram-inspired environment.
@@ -18,8 +18,8 @@ products in an Instagram-inspired environment.
 
 1. Clone the repository:
 ```bash
-git clone [your-repository-url]
-cd [repository-name]
+git clone git@github.com:cejohnson230/moshi-chat.git
+cd moshi-chat
 ```
 
 2. Install dependencies:
