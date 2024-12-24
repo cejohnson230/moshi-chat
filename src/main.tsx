@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.tsx'
 import { AdvertisersDataSetProvider } from './hooks/useAdvertisersDataSet.tsx'
 import { BrandDataProvider } from './hooks/useBrandData'
+import React from 'react'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

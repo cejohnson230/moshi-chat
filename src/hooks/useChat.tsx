@@ -30,84 +30,32 @@ export const useChat = () => {
       setChatHistory(updatedHistory);
 
       try {
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        const response = await fetch("http://localhost:3000/openai/chat", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
           },
-          body: JSON.stringify({
-            model: `${import.meta.env.VITE_OPENAI_MODEL || 'gpt-4o-mini'}`,
-            messages: updatedHistory,
-            stream: true,
-            temperature: 0.7,
-            max_tokens: 150
-          }),
+          body: JSON.stringify({ messages: updatedHistory }),
         });
 
-        const reader = response.body?.getReader();
-        if (!reader) throw new Error('No reader available');
+        const data = await response.json();
+        const botResponse = data.response;
 
-        let accumulatedText = '';
+        // Create and add the bot message
+        const botMessage: Message = {
+          id: Date.now().toString(),
+          text: botResponse,
+          sender: 'bot',
+          timestamp: new Date(),
+        };
+        setMessages(prev => [...prev, botMessage]);
         
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
+        // Update chat history with bot's response
+        setChatHistory(prev => [...prev, { 
+          role: 'assistant', 
+          content: botResponse 
+        }]);
 
-          const chunk = new TextDecoder().decode(value);
-          const lines = chunk.split('\n').filter(line => line.trim() !== '');
-          
-          for (const line of lines) {
-            if (line.startsWith('data: ')) {
-              const data = line.slice(6);
-              
-              if (data === '[DONE]') continue;
-
-              try {
-                const parsed = JSON.parse(data);
-                const content = parsed.choices[0]?.delta?.content;
-                
-                if (content) {
-                  accumulatedText += content;
-                  
-                  if (accumulatedText.includes('\n\n')) {
-                    const paragraphs = accumulatedText.split('\n\n');
-                    accumulatedText = paragraphs.pop() || '';
-                    
-                    for (const paragraph of paragraphs) {
-                      if (paragraph.trim()) {
-                        const botMessage: Message = {
-                          id: Date.now().toString(),
-                          text: paragraph.trim(),
-                          sender: 'bot',
-                          timestamp: new Date(),
-                        };
-                        setMessages(prev => [...prev, botMessage]);
-                      }
-                    }
-                  }
-                }
-              } catch (e) {
-                console.error('Error parsing stream chunk:', e);
-              }
-            }
-          }
-        }
-
-        if (accumulatedText.trim()) {
-          const botMessage: Message = {
-            id: Date.now().toString(),
-            text: accumulatedText.trim(),
-            sender: 'bot',
-            timestamp: new Date(),
-          };
-          setMessages(prev => [...prev, botMessage]);
-          
-          setChatHistory(prev => [...prev, { 
-            role: 'assistant', 
-            content: accumulatedText.trim() 
-          }]);
-        }
       } catch (error) {
         console.error('Error generating bot response:', error);
         const errorMessage: Message = {
@@ -120,7 +68,7 @@ export const useChat = () => {
       } finally {
         setIsTyping(false);
       }
-    }, [chatHistory, activeDataSet]);
+    }, [chatHistory]);
 
   return {
     messages,
