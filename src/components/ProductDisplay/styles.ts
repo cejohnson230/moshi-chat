@@ -1,10 +1,8 @@
 export const styles = {
   container: {
-    marginRight: '0',
-    // border: '1px solid #ddd',
-    // borderRadius: '8px',
+    width: '100%',
     maxWidth: '600px',
-    height: '100%',
+    margin: '0 auto',
     minHeight: '600px',
     display: 'flex',
     flexDirection: 'column' as const,
