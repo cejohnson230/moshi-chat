@@ -36,35 +36,19 @@ yarn dev
 
 The application will be available at `http://localhost:5173`
 
-## Build for Production
+## Backend Server
+The backend server/APIs can be found here: [moshi-server](https://github.com/cejohnson230/moshi-server)
 
-To create a production build:
-```bash
-npm run build
-# or
-yarn build
+Follow the instructions found in the README to run the backend APIs. This service's URL is defined in the .env file.
+
+
+## Create .env File
+
+Create a .env file at the root of the project and populate the following variable with the correct URl for the backend server
+```
+VITE_API_BASE_URL=http://localhost:3000 
 ```
 
-The built files will be in the `dist` directory.
-
-## Setting Up OpenAI Integration
-
-1. Create a `.env.local` file in the root directory:
-```bash
-VITE_OPENAI_API_KEY=your_api_key_here
-VITE_OPENAI_MODEL=gpt-3.5-turbo # or gpt-4
-```
-
-2. Get your OpenAI API key:
-   - Sign up/login at [OpenAI Platform](https://platform.openai.com)
-   - Navigate to API keys section
-   - Create a new API key
-   - Copy and paste it into your `.env.local` file
-
-### Supported Models
-
-- GPT-3.5 Turbo
-- GPT-4 (if you have access)
 
 ## Project Architecture
 
