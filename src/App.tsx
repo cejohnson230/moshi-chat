@@ -14,12 +14,16 @@ const App: React.FC = () => {
       alignItems: 'center', 
       justifyContent: 'center',
       minHeight: '100vh',
-      padding: '20px'
+      padding: '20px',
+      width: '100%',
+      boxSizing: 'border-box'
     }}>
       <div style={{ 
         display: 'flex', 
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        width: '100%',
+        maxWidth: '600px'
       }}>
         {showChat ? (
           <ChatWindow onBack={() => setShowChat(false)} />
