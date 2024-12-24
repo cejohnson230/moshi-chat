@@ -6,6 +6,16 @@ export const NavBar = styled.div`
   padding: 12px 16px;
   background-color: white;
   border-bottom: 1px solid #dbdbdb;
+
+    @media (max-width: 768px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    height: 60px; // Set explicit height
+  }
 `;
 
 export const IconButton = styled.button`

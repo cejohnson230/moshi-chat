@@ -1,23 +1,37 @@
 import styled from 'styled-components';
 
 export const ChatContainer = styled.div`
-  width: 100%;
-  width: 400px;
-  height: 600px;
-  border: 1px solid #dbdbdb;
-  border-radius: 4px;
   display: flex;
   flex-direction: column;
-  background-color: ${props => props.theme.colors?.neutral || '#E7E7E7'};
+  height: calc(100vh - 500px);
+
+  @media (max-width: 768px) {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
 `;
 
 export const MessagesContainer = styled.div`
   flex: 1;
   overflow-y: auto;
-  padding: 16px;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
+  overflow-x: hidden;
+  padding: 1rem;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 60px; // Height of NavBar
+    bottom: 80px; // Height of MessageInput
+    left: 0;
+    right: 0;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    overflow-y: auto;
+  }
 `;
 
 export const MessageInput = styled.div`
@@ -26,6 +40,15 @@ export const MessageInput = styled.div`
   background-color: #fff;
   display: flex;
   gap: 8px;
+
+    @media (max-width: 768px) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    height: 40px;
+  }
 `;
 
 export const Input = styled.input`
