@@ -33,7 +33,7 @@ Once the user has selected an ad, the user is redirected to the chat window. Bas
 The chat bot is a simple LLM that is used to answer questions about the product. The LLM is hosted on a local Ollama instance. 
 
 
-Upon the user sending the message, the message is passed into the llama2 model, with the following context: 
+Upon the user sending the message, the message is passed into the LLM with the following context: 
 
 ```
 You are a helpful shopping assistant representing <the brand>.
