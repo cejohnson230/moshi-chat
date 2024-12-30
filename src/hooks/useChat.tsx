@@ -81,6 +81,7 @@ export const useChat = () => {
 
         // Set both the chat history and messages
         setChatHistory([
+          ...history,
           {
             role: 'system',
             content: `You are a helpful shopping assistant representing ${activeDataSet.brandId}. 
@@ -93,8 +94,7 @@ export const useChat = () => {
                 Only once the users agrees to purchase the product, give them the checkout link and ask them to click the link below to purchase the product.
                 The checkout link is ${activeDataSet.adContent.checkoutUrl}
                 `
-          },
-          ...history
+          }
         ]);
 
         // Convert ChatMessages to Message format for display
