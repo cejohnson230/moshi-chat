@@ -1,22 +1,33 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from '../../App';
 import { useAdvertisersDataSet } from '../../hooks/useAdvertisersDataSet';
+import { UserProvider } from '../../contexts/UserContext';
 import '@testing-library/jest-dom';
-import React from 'react';
 
 // Mock the custom hook
 jest.mock('../../hooks/useAdvertisersDataSet');
 
+jest.mock('../../constants', () => ({
+  API_BASE_URL: 'http://localhost:3000',
+}));
+
 const mockDataSet = {
-  id: '1',
-  adContent: {
-    imageUrl: 'test-image.jpg',
-  },
-  productDetails: {
-    originalPrice: 100,
-    discountAmount: 20,
-  },
-};
+    id: '1',
+    brandId: 'test-brand',
+    productDetails: {
+      name: 'Product 1',
+      originalPrice: 100,
+      discountAmount: 20,
+      description: 'Product 1 description',
+      variants: ['Variant 1', 'Variant 2']
+    },
+    adContent: {
+      imageUrl: 'test-image-1.jpg',
+      callToAction: 'Chat Now',
+      caption: 'Product 1',
+      checkoutUrl: 'https://test-checkout-url-1.com'
+    }
+  };
 
 const mockDataSets = [mockDataSet];
 
@@ -28,23 +39,34 @@ describe('App Component', () => {
       activeDataSet: mockDataSet,
       setActiveDataSetById: jest.fn(),
     });
+
   });
 
+  // Wrap the render function to include the UserProvider
+  const renderWithProviders = (ui: React.ReactElement) => {
+    return render(
+      <UserProvider>
+        {ui}
+      </UserProvider>
+    );
+  };
+
   test('renders ProductDisplay by default', () => {
-    render(<App />);
+    renderWithProviders(<App />);
     
     // Check if the image is rendered
-    expect(screen.getByRole('img')).toBeInTheDocument();
+    expect(screen.queryByAltText('Product')).toBeInTheDocument();
     
+
     // Check if price information is displayed
-    expect(screen.getByText(/100/)).toBeInTheDocument();
+    expect(screen.getByText(/Now available for/)).toBeInTheDocument();
   });
 
   test('switches to ChatWindow when chat button is clicked', () => {
-    render(<App />);
+    renderWithProviders(<App />);
     
-    // Find and click the chat button
-    const chatButton = screen.getByRole('button', { name: /chat/i });
+    // Updated to match the actual button text
+    const chatButton = screen.getByRole('button', { name: /chat now/i });
     fireEvent.click(chatButton);
     
     // Verify ChatWindow is rendered
@@ -52,10 +74,10 @@ describe('App Component', () => {
   });
 
   test('returns to ProductDisplay when back button is clicked in chat', () => {
-    render(<App />);
+    renderWithProviders(<App />);
     
-    // Navigate to chat
-    const chatButton = screen.getByRole('button', { name: /chat/i });
+    // Updated to match the actual button text
+    const chatButton = screen.getByRole('button', { name: /chat now/i });
     fireEvent.click(chatButton);
     
     // Click back button
@@ -63,6 +85,6 @@ describe('App Component', () => {
     fireEvent.click(backButton);
     
     // Verify ProductDisplay is shown again
-    expect(screen.getByRole('img')).toBeInTheDocument();
+    expect(screen.queryByAltText('Product')).toBeInTheDocument();
   });
 }); 

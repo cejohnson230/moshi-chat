@@ -14,14 +14,20 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ onBack, brandName, brandL
   return (
     <>
       <NavBar>
-        <IconButton onClick={onBack}>
+        <IconButton 
+          onClick={onBack} 
+          aria-label="back"
+        >
           <FaArrowLeft />
         </IconButton>
         <BrandContainer>
           <BrandLogo src={brandLogo} alt={brandName} />
           <BrandName>{brandName}</BrandName>
         </BrandContainer>
-        <IconButton onClick={() => setShowCallPopup(true)}>
+        <IconButton 
+          onClick={() => setShowCallPopup(true)}
+          aria-label="call"
+        >
           <FaPhone />
         </IconButton>
       </NavBar>

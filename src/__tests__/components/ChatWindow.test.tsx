@@ -2,19 +2,35 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ChatWindow from '../../components/ChatWindow/index';
 import { useChat } from '../../hooks/useChat';
 import { useBrandData } from '../../hooks/useBrandData';
+import { AdvertisersDataSetProvider } from '../../hooks/useAdvertisersDataSet';
+import { UserProvider } from '../../contexts/UserContext';
 import '@testing-library/jest-dom';
-import React from 'react';
 
 
 // Mock the hooks
 jest.mock('../../hooks/useChat');
 jest.mock('../../hooks/useBrandData');
+jest.mock('../../constants', () => ({
+  API_BASE_URL: 'http://localhost:3000',
+}));
 
 describe('ChatWindow Component', () => {
   const mockOnBack = jest.fn();
   const mockGenerateBotResponse = jest.fn();
   const mockSetMessages = jest.fn();
+  const mockSetActiveBrandById = jest.fn();
   
+  // Create a wrapper component with all required providers
+  const renderWithProviders = (ui: React.ReactElement) => {
+    return render(
+      <UserProvider>
+        <AdvertisersDataSetProvider>
+          {ui}
+        </AdvertisersDataSetProvider>
+      </UserProvider>
+    );
+  };
+
   beforeEach(() => {
     // Reset all mocks
     jest.clearAllMocks();
@@ -32,19 +48,20 @@ describe('ChatWindow Component', () => {
       activeBrand: {
         name: 'Test Brand',
         iconUrl: 'test-icon.png'
-      }
+      },
+      setActiveBrandById: mockSetActiveBrandById
     });
   });
 
   test('renders chat window with navigation bar', () => {
-    render(<ChatWindow onBack={mockOnBack} />);
+    renderWithProviders(<ChatWindow onBack={mockOnBack} />);
     
     expect(screen.getByTestId('chat-window')).toBeInTheDocument();
     expect(screen.getByText('Test Brand')).toBeInTheDocument();
   });
 
   test('handles sending a message', async () => {
-    render(<ChatWindow onBack={mockOnBack} />);
+    renderWithProviders(<ChatWindow onBack={mockOnBack} />);
     
     const input = screen.getByPlaceholderText(/message/i);
     const sendButton = screen.getByRole('button', { name: /send/i });
@@ -65,7 +82,7 @@ describe('ChatWindow Component', () => {
   });
 
   test('handles sending message with Enter key', () => {
-    render(<ChatWindow onBack={mockOnBack} />);
+    renderWithProviders(<ChatWindow onBack={mockOnBack} />);
     
     const input = screen.getByPlaceholderText(/message/i);
     fireEvent.change(input, { target: { value: 'Hello' } });
@@ -82,7 +99,7 @@ describe('ChatWindow Component', () => {
       setMessages: mockSetMessages
     });
 
-    render(<ChatWindow onBack={mockOnBack} />);
+    renderWithProviders(<ChatWindow onBack={mockOnBack} />);
     expect(screen.getByRole('status')).toBeInTheDocument();
   });
 
@@ -99,7 +116,7 @@ describe('ChatWindow Component', () => {
       setMessages: mockSetMessages
     });
 
-    render(<ChatWindow onBack={mockOnBack} />);
+    renderWithProviders(<ChatWindow onBack={mockOnBack} />);
     
     expect(screen.getByText('Hello')).toBeInTheDocument();
     expect(screen.getByText('Hi there!')).toBeInTheDocument();

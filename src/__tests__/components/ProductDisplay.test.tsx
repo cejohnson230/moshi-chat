@@ -2,7 +2,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import ProductDisplay from '../../components/ProductDisplay';
 import '@testing-library/jest-dom';
 import { AdvertisersDataSet } from '../../hooks/useAdvertisersDataSet';
-import React from 'react';
 
 
 describe('ProductDisplay Component', () => {
@@ -36,7 +35,7 @@ describe('ProductDisplay Component', () => {
       },
       adContent: {
         imageUrl: 'test-image-2.jpg',
-        callToAction: 'Start Chat',
+        callToAction: 'Chat Now',
         caption: 'Product 2',
         checkoutUrl: 'https://test-checkout-url-2.com'
       }

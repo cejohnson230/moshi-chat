@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { useBrandData } from "./useBrandData";
-import React from 'react';
 
 export type AdvertisersDataSet = {
   id: string;
